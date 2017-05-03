@@ -1,0 +1,24 @@
+{
+    "name": "nodejs-parser",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "parse": "node index"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/devdevil666/nodejs-parser.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/devdevil666/nodejs-parser/issues"
+    },
+    "homepage": "https://github.com/devdevil666/nodejs-parser#readme",
+    "dependencies": {
+        "cheerio": "^0.20.0",
+        "needle": "^1.0.0",
+        "tress": "^1.0.0"
+    }
+}
