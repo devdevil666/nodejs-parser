@@ -15,6 +15,8 @@ var URL = 'http://kinogo.club/komedii/';
 var results = [];
 var page = 1;
 
+console.log("\n\n----------------------------------\nПарсинг...");
+console.log(`Рейтинг не меньше...${minRating}, год не раньше ${minYear}. Максимум ${maxPages} страниц`);
 var q = tress(function(url, callback){
     needle.get(url, function(err, res){
         if (err) throw err;
@@ -34,7 +36,8 @@ var q = tress(function(url, callback){
             if( 
                 $(this).find('h2 a').text().indexOf('сезон') === -1 && 
                 +$(this).find('.current-rating').text() >= minRating &&
-                +$(this).find('> div').eq(1).find('a').eq(1).text() >= minYear
+                +$(this).find('> div').eq(1).find('a').eq(1).text() >= minYear &&
+                $(this).find('> div').eq(1).text().indexOf('HDRip') !== -1
                 ) {
                 results.push({
                     title: $(this).find('h2 a').text(),
@@ -59,6 +62,7 @@ var q = tress(function(url, callback){
 }, 15);
 
 q.drain = function(){
+    console.log('Найдено '+ results.length +' результатов');
     fs.writeFileSync('./data.json', JSON.stringify(results, null, 4));
 }
 
