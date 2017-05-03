@@ -1,3 +1,10 @@
+// -----------------------------------
+var minRating = 4;
+var minYear = 2016;
+var maxPages = 15;
+// -----------------------------------
+
+
 var tress = require('tress');
 var needle = require('needle');
 var cheerio = require('cheerio');
@@ -8,7 +15,6 @@ var URL = 'http://kinogo.club/komedii/';
 var results = [];
 var page = 1;
 
-var maxPages = 15;
 var q = tress(function(url, callback){
     needle.get(url, function(err, res){
         if (err) throw err;
@@ -27,8 +33,8 @@ var q = tress(function(url, callback){
         $('.shortstory').each(function(i, elem) {
             if( 
                 $(this).find('h2 a').text().indexOf('сезон') === -1 && 
-                +$(this).find('.current-rating').text() >= 4
-
+                +$(this).find('.current-rating').text() >= minRating &&
+                +$(this).find('> div').eq(1).find('a').eq(1).text() >= minYear
                 ) {
                 results.push({
                     title: $(this).find('h2 a').text(),
@@ -50,7 +56,7 @@ var q = tress(function(url, callback){
 
         callback();
     });
-}, 10);
+}, 15);
 
 q.drain = function(){
     fs.writeFileSync('./data.json', JSON.stringify(results, null, 4));
